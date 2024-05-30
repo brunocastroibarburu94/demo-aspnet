@@ -6,3 +6,5 @@ ConsoleApp1.sln
 temp/
 UpgradeLog.htm
 .vs/
+*.db-shm
+*.db-wal

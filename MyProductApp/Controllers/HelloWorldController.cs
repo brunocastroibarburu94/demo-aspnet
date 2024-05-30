@@ -17,4 +17,11 @@ public class HelloWorldController : Controller
     {
         return "This is the Welcome action method...";
     }
+    
+    public IActionResult RepeatHi(string name, int numTimes = 1)
+    {
+        ViewData["Message"] = "Hello " + name;
+        ViewData["NumTimes"] = numTimes;
+        return View();
+    }
 }

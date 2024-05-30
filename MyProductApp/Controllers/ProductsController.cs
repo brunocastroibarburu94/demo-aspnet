@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MyProductApp.Models;
 using System.Collections.Generic;
+using System.Diagnostics;//Activity
 
 namespace MyProductApp.Controllers
 {
@@ -48,11 +49,12 @@ namespace MyProductApp.Controllers
         {
             return "Welcome master Wayne!";
         }
-        // [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        // public IActionResult Error()
-        // {
-        //     return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        // }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
 
     }
 }
