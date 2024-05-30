@@ -2,3 +2,7 @@
 */obj/*
 ConsoleApp1.sln
 .vscode/settings.json
+*/wwwroot/*
+temp/
+UpgradeLog.htm
+.vs/
