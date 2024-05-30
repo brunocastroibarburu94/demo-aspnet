@@ -44,6 +44,10 @@ namespace MyProductApp.Controllers
             return RedirectToAction("Index");
         }
         
+        public string Welcome()
+        {
+            return "Welcome master Wayne!";
+        }
         // [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         // public IActionResult Error()
         // {

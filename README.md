@@ -6,10 +6,19 @@ This is a repo for demo to try out ASP.NET development
 dotnet run --project ./ConsoleApp1
 dotnet run --project ./ConsoleApp2
 dotnet run --project ./WebApplication1
+dotnet run --project ./MyProductApp
+
+# Allow for auto-refresh of site when modifying the C# files
+dotnet watch run --project .\MyProductApp\
 ```
 
-[Brilliant Medium Article](https://medium.com/itthirit-technology/building-your-first-net-core-web-app-a-step-by-step-guide-a69af3f55105)
 
+### MyProductApp
+This example is adapted from [Brilliant Medium Article](https://medium.com/itthirit-technology/building-your-first-net-core-web-app-a-step-by-step-guide-a69af3f55105) in combination with the [ASP.NET Core .NET 8.0 Documentation](https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-mvc-app/adding-controller?view=aspnetcore-8.0&tabs=visual-studio)
+
+##### Quick Links
+- [Product Controller Welcome Message: http://localhost:5110/Products/Welcome](http://localhost:5110/Products/Welcome)
+- [Second Controller Welcome Message: http://localhost:5110/HelloWorld/Welcome](http://localhost:5110/HelloWorld/Welcome)
 ### Installing node
 [Nodejs website](https://nodejs.org/en/download/package-manager)
 ```shell
