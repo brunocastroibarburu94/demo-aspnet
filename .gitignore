@@ -2,7 +2,11 @@
 */obj/*
 ConsoleApp1.sln
 .vscode/settings.json
-*/wwwroot/*
+*/wwwroot/lib/*
+*/wwwroot/favicon.ico
+*/wwwroot/css/*
+*/wwwroot/lib/*
+
 temp/
 UpgradeLog.htm
 .vs/
