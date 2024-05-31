@@ -28,7 +28,7 @@ dotnet add ./MyProductApp package Microsoft.EntityFrameworkCore.Tools
 
 ```
 
-##### Shortcuts for CR UDfile generation
+##### Shortcuts for CRUD file generation
 **dotnet-aspnet-codegenerator**: Is a useful CLI tool that one can use to auto-generate code. This is called **Scaffolding**
 ```shell
 # Automatically create controller using the code generator with CRUD actions for the data context (dc) MyProductApp.Data.MvcMovieContext 
@@ -46,30 +46,29 @@ Scaffolding updates the following:
 - Registers the database context in the `Program.cs` file
 - Adds a database connection string to the `appsettings.json` file.
 
-###### Creation of database:
+###### Creation of database: SQLite
+
 ```shell
 # Generate a Migrations/{timestamp}_InitialCreate.cs migration file. (This automatically scans the project and creates the )
 dotnet ef --project ./MyProductApp migrations add InitialCreate
 # Create database
 dotnet ef --project ./MyProductApp  database update
-
 ```
-###### Note on dev and prod environments
-For some reason whilst following the Microsoft example "[Part 4, add a model to an ASP.NET Core MVC app | Microsoft Learn](https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-mvc-app/adding-model?view=aspnetcore-8.0&tabs=visual-studio-code)" the addition of the code below into `Program.cs` makes the database generation codes of the previous section to fail.
 
-```c#
-var builder = WebApplication.CreateBuilder(args);
+###### Creation of database: SQL Server 2022 Developer Edition (Microsoft RDB)
 
-if (builder.Environment.IsDevelopment())
-{
-    builder.Services.AddDbContext<MvcMovieContext>(options =>
-        options.UseSqlite(builder.Configuration.GetConnectionString("MvcMovieContext")));
-}
-else
-{
-    builder.Services.AddDbContext<MvcMovieContext>(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString("ProductionMvcMovieContext")));
-}
+Before you begin make sure to download and install the SQL Server 2022 in your system, the Developer Edition is Free and should be close to its enterprise counterpart to keep it real, [SQL Server Download site](https://www.microsoft.com/en-gb/sql-server/sql-server-downloads).
+
+Once is installed in order to make use of SQL Server as the database there are 2 options
+1. **Nice person option - Get a Certificate**:[StackOverflow](https://stackoverflow.com/questions/17615260/the-certificate-chain-was-issued-by-an-authority-that-is-not-trusted-when-conn)
+1. **Security facepalm option - Just trust the connection**: At the end of the connection string slap the following text `TrustServerCertificate=True`
+
+In the future (maybe) I will add a guide on how to do the nice person option but for now let's stick with the security facepalm.
+
+To
+```shell
+# dotnet ef  --project ./MyProductApp  database update --connection "MvcMovieContext"
+dotnet ef  --project ./MyProductApp  database update --connection "Server=localhost;Database=Master;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True"
 ```
 
 ##### Quick Links
