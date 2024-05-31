@@ -69,6 +69,10 @@ To
 ```shell
 # dotnet ef  --project ./MyProductApp  database update --connection "MvcMovieContext"
 dotnet ef  --project ./MyProductApp  database update --connection "Server=localhost;Database=Master;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True"
+
+# To unapply all migrations:
+dotnet ef  --project ./MyProductApp  database update 0 --connection "Server=localhost;Database=Master;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True"
+
 ```
 
 ##### Quick Links
