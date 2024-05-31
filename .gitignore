@@ -12,3 +12,6 @@ UpgradeLog.htm
 .vs/
 *.db-shm
 *.db-wal
+
+*/node_modules/*
+
