@@ -179,3 +179,19 @@ This should have created a directory"`FoodOrderingClient`" right next to the dir
 
 The data model is created in the file `FoodOrderingClient/model/data.ts`
 
+### Step 8: Align our Angular Client with the server - Real-time service creation
+
+To create the service in the Angular client execute the code below but make sure your terminal is in the directory `./FoodOrderingClient`.
+```shell
+# Terminal must be in the directory ./FoodOrderingClient 
+ng generate service RealtimeClient
+```
+
+This should have created the following 2 files
+- `./FoodOrderingClient/src/app/realtime-client.service.spec.ts`
+- `./FoodOrderingClient/src/app/realtime-client.service.ts`
+
+
+##### Notes on ts (TypeScript) files
+> TypeScript is a primary language for Angular application development. It is a superset of JavaScript with design-time support for type safety and tooling. Browsers can't execute TypeScript directly. Typescript must be "transpiled" into JavaScript using the tsc compiler, which requires some configuration. [Angular Documentation](https://v2.angular.io/docs/ts/latest/guide/typescript-configuration.html#:~:text=TypeScript%20is%20a%20primary%20language,compiler%2C%20which%20requires%20some%20configuration.)
+
