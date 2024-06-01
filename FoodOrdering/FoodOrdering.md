@@ -195,3 +195,59 @@ This should have created the following 2 files
 ##### Notes on ts (TypeScript) files
 > TypeScript is a primary language for Angular application development. It is a superset of JavaScript with design-time support for type safety and tooling. Browsers can't execute TypeScript directly. Typescript must be "transpiled" into JavaScript using the tsc compiler, which requires some configuration. [Angular Documentation](https://v2.angular.io/docs/ts/latest/guide/typescript-configuration.html#:~:text=TypeScript%20is%20a%20primary%20language,compiler%2C%20which%20requires%20some%20configuration.)
 
+### Step 9: Align our Angular Client with the server - Real-time service configuration
+**Note**: To execute this step make sure you have installed the angular dependency `@microsoft/signalr`. You can do that by executing the command below.
+```shell
+npm i @microsoft/signalr@latest --save
+```
+
+This `realtime-client` service needs still to be configured, to do so we must introduce the following modifications in the TypeScript file `./FoodOrderingClient/src/app/realtime-client.service.ts`.
+
+```ts
+// FoodOrderingClient/src/app/realtime-client.service.ts
+
+// import { Injectable } from '@angular/core';...
+// [1] - Import dependencies on top of the file
+import * as signalR from '@microsoft/signalr';
+import {Observable, Subject} from "rxjs";
+import {FoodRequest, Order, OrderState} from "../model/data";
+
+
+// [2] - Add attributes to the class RealtimeClientService
+// ...export class RealtimeClientService {...
+  private hubConnection?: signalR.HubConnection; // References our SignalR hub
+  private pendingFoodUpdatedSubject = new Subject<Order[]>(); //Houses our Subject
+  ordersUpdated$: Observable<Order[]> = this.pendingFoodUpdatedSubject.asObservable(); //Other parts of our application can subscribe to this attribute
+
+//   ...constructor() {    
+// [3] - Modify the constructor
+  this.hubConnection = new signalR.HubConnectionBuilder()
+    .withUrl('http://localhost:4200/foodhub') // Replace with your SignalR hub URL
+    .build();
+
+  this.hubConnection
+    .start()
+    .then(() => console.log('Connected to SignalR hub'))
+    .catch(err => console.error('Error connecting to SignalR hub:', err));
+
+  this.hubConnection.on('PendingFoodUpdated', (orders: Order[]) => {
+    this.pendingFoodUpdatedSubject.next(orders);
+  });
+
+// }...
+// Note: For some reason in the repository used by the article instead of putting this code in constructor it vreates an additional method called "connect" and implements a similar version of step [3] there
+
+// [4] - Create methods orderFoodItem & updateFoodItem
+    async orderFoodItem(foodId: number, table: number) {
+        console.log("ordering");
+        await this.hubConnection.invoke('OrderFoodItem', {
+            foodId,
+            table,
+        } as FoodRequest);
+    }
+
+    async updateFoodItem(orderId: number, state: OrderState) {
+        await this.hubConnection.invoke('UpdateFoodItem', orderId, state);
+    }
+
+```
