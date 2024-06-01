@@ -258,4 +258,37 @@ Although we still haven't configured the app pages to order food it is important
 ng serve
 ```
 
-### Step 11: Configure pages
+### Step 11: Angular Frontend - Generate customer component
+
+```shell
+# Generate Costumer Component
+ng generate component customers --style "css"
+```
+
+This will generate the following files:
+- `FoodOrderingClient/src/app/customers/customers.component.css`
+- `FoodOrderingClient/src/app/customers/customers.component.html`
+- `FoodOrderingClient/src/app/customers/customers.component.spec.ts`
+- `FoodOrderingClient/src/app/customers/customers.component.ts`
+
+In order to link the component to the client one needs to add it to the app "Routes" which can be found in the file `./FoodOrderingClient/src/app/app.routes.ts`.
+
+```ts
+// ./FoodOrderingClient/src/app/app.routes.ts
+import {CustomersComponent} from "./customers/customers.component";
+
+export const routes: Routes = [
+    { path: 'customers', component: CustomersComponent }
+];
+```
+
+**Validation:** To test that the component has been correctly routed spin up the Angular client
+
+```shell
+# Shell on directory ./FoodOrderingClient
+ng serve
+```
+
+Open the website under the customers route `http://localhost:4200/customers`. You should observe the text **customers works!** at the bottom of the page.
+
+### Step 12: Angular Frontend - Configure customer component
