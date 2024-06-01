@@ -22,3 +22,9 @@ See the files:
 - `Model/FoodItem.cs`
 - `Model/Order.cs`
 
+### Step 4: Add context & Initial Migration file
+
+Create the context file to setup database connection between models and data:
+- `Contexts/DataContext.cs`
+
+
