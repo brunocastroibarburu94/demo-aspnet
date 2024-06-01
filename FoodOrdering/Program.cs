@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;//AddDbContext
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -11,6 +12,9 @@ builder.Services.AddDbContext<DataContext>(options => options.UseSqlite("Data So
 
 // Add service that populates the database & puts in a usable state
 builder.Services.AddHostedService<SeedingWorker>();
+
+// Add SignalR
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -43,6 +47,9 @@ app.MapGet("/weatherforecast", () =>
 })
 .WithName("GetWeatherForecast")
 .WithOpenApi();
+
+// Configure our SignalR hub
+app.MapHub<FoodHub>("/foodhub");
 
 app.Run();
 #nullable enable

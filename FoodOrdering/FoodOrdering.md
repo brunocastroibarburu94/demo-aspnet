@@ -291,4 +291,30 @@ ng serve
 
 Open the website under the customers route `http://localhost:4200/customers`. You should observe the text **customers works!** at the bottom of the page.
 
-### Step 12: Angular Frontend - Configure customer component
+### Step 12: SignalR Backend - Creation of SignalR Hub
+Before we can continue developing the frontend we need to create a SignalR hub in the backed that the Angular frontend can connect with.
+
+To do this 2 files will need to be created:
+- `FoodOrdering/Hub/FoodHub.cs`: Defines the Hub 
+- `FoodOrdering/Model/Realtime/FoodRequest.cs`: Defines the requests processed by the Hub
+
+Finally `FoodOrdering/Program.cs` needs to be modified to add SignalR to the builder and configure the SignalR Hub o the application
+
+```cs
+// FoodOrdering/Program.cs
+
+// var builder = WebApplication.CreateBuilder(args);// Declaration of builder (already present)
+
+// Make sure the line below is between the declarations of builder and app.
+builder.Services.AddSignalR(); // Add SignalR to Builder
+
+// var app = builder.Build();// Declaration of app (already present)
+
+// Make sure the line below is after the app variable
+app.MapHub<FoodHub>("/foodhub"); //Configure mapping of Hub to receive messages on the path /foodhub
+```
+
+To verify the step was completed successfully try to run the backend app *FoodOrdering* using the code below.
+```shell
+dotnet watch run ./FoodOrdering
+```
