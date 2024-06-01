@@ -14,5 +14,11 @@ For this example we are going to connect with a SQLite local database. TODO: Dow
 ```shell
 dotnet add ./FoodOrdering package Microsoft.EntityFrameworkCore.Design 
 dotnet add ./FoodOrdering package Microsoft.EntityFrameworkCore.SQLite
-
 ```
+
+### Step 3: Add models
+
+See the files:
+- `Model/FoodItem.cs`
+- `Model/Order.cs`
+
