@@ -251,3 +251,11 @@ import {FoodRequest, Order, OrderState} from "../model/data";
     }
 
 ```
+### Step 10: Check that the angular app can be run
+Although we still haven't configured the app pages to order food it is important to check that the application we have been writing so far still compiles and can be served. To test this we will attempt to serve the Angular client exeucting the code below
+
+```shell
+ng serve
+```
+
+### Step 11: Configure pages
