@@ -132,3 +132,26 @@ Should generate the files:
 - `Migrations/DataContextModelSnapshot.cs`
 
 
+### Step 5: Add a seeding worker (populates the database)
+The workers are services that run with the app, in this case we define a worker that ensures the database is in a useful state and populates it with some data. This is done by adding the file `Workers/SeedingWorker.cs` and adding a reference to it in the `Program.cs` file.
+
+
+```cs
+using Microsoft.EntityFrameworkCore;// Add reference to dependency to "AddDbContext"
+
+// var builder = WebApplication.CreateBuilder(args);// Declaration of builder (already present)
+
+// Make sure theline below is between the declarations of builder and app.
+builder.Services.AddHostedService<SeedingWorker>();
+
+// var app = builder.Build();// Declaration of app (already present)
+```
+
+Now if you run the app by executing
+
+```shell
+dotnet watch run --project ./FoodOrdering
+```
+You will see that the SQLite database is created by generating the file `mydatabase.sqlite`, this sqlite database can be queried and after running the app you can see that it has been populated with data. 
+
+- **Note that the app still doesn't have a front-end so the only way to see the data is by inspecting the sqlite database file `mydatabase.sqlite`**

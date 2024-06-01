@@ -9,6 +9,9 @@ builder.Services.AddSwaggerGen();
 // The connection string is specified directly here.[Without referecing appsettings.json]
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlite("Data Source=mydatabase.sqlite"));
 
+// Add service that populates the database & puts in a usable state
+builder.Services.AddHostedService<SeedingWorker>();
+
 var app = builder.Build();
 
 
