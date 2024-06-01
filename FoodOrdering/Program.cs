@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;//AddDbContext
+using System.Text.Json.Serialization;//JsonSerializerOptions
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,9 @@ builder.Services.AddDbContext<DataContext>(options => options.UseSqlite("Data So
 
 // Add service that populates the database & puts in a usable state
 builder.Services.AddHostedService<SeedingWorker>();
+
+// Add MVC functionality to .NET app, i.e., to load Controllers used for API endpoints
+builder.Services.AddMvc().AddJsonOptions(x => { x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()); });
 
 // Add SignalR
 builder.Services.AddSignalR();
@@ -33,28 +37,9 @@ var summaries = new[]
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 };
 
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
+app.MapControllers();
 
 // Configure our SignalR hub
 app.MapHub<FoodHub>("/foodhub");
 
 app.Run();
-#nullable enable
-record WeatherForecast(DateOnly Date, int TemperatureC,string? Summary)
-#nullable disable
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

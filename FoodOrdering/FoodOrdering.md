@@ -319,3 +319,37 @@ To verify the step was completed successfully try to run the backend app *FoodOr
 dotnet watch run ./FoodOrdering
 ```
 
+### Step 13: Backend - Creation of API 
+Before we can continue developing the frontend we need to create API endpoints so that the frontend can query information from the backend.
+
+This is done via the introduction of controllers, there are 2 controllers we are going to utilize to define our API endpoints. These are the `KitchenController` and the `FoodItemsController ` which are defined by the files:
+
+- `FoodOrdering/Controllers/KitchenController.cs`
+- `FoodOrdering/Controllers/FoodItemsController.cs`
+
+Then in the `FoodOrdering/Program.cs` file the MVC feature needs to be added to the builder and the controller needs to be mapped
+
+
+```cs
+// FoodOrdering/Program.cs
+
+// var builder = WebApplication.CreateBuilder(args);// Declaration of builder (already present)
+
+// Make sure the line below is between the declarations of builder and app.
+// Add MVC functionality to .NET app, i.e., to load Controllers used for API endpoints
+builder.Services.AddMvc().AddJsonOptions(x => { x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()); });
+// var app = builder.Build();// Declaration of app (already present)
+
+// Make sure the line below is after the app variable
+app.MapControllers();//Map controller endpoints 
+```
+
+Verify that the backend's API is working by spinning up the backend with:
+```shell
+dotnet watch run ./FoodOrdering
+```
+
+And in the browser calling the API using:
+- [http://localhost:5083/api/FoodItems/GetFoodItems](http://localhost:5083/api/FoodItems/GetFoodItems)
+- [http://localhost:5083/api/Kitchen/GetExistingOrders](http://localhost:5083/api/Kitchen/GetExistingOrders)
+
