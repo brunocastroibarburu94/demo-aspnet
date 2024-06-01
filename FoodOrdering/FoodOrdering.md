@@ -2,6 +2,11 @@
 
 In this example we are putting it all together following the example from [Lewis Cianci](https://blog.logrocket.com/using-real-time-data-angular-signalr/#creating-server-side-app).
 
+## Local serve:
+```shell
+dotnet watch run --project .\FoodOrdering\
+```
+
 ## Steps
 ### Step 1: Create a .NET WebApi Template
 ```shell
@@ -30,7 +35,7 @@ Create the context file to setup database connection between models and data:
 
 Generate migration files using Entity Framework:
 ```shell
-dotnet ef --project ./FoodOrdering migrations add InitialCreate
+dotnet ef --project ./FoodOrdering migrations add Initial
 ```
 
 #### Notes
@@ -40,7 +45,7 @@ This step had several errors whilst following the example linked above. To debug
 After executing 
 
 ```shell
-dotnet ef --project ./FoodOrdering migrations add InitialCreate
+dotnet ef --project ./FoodOrdering migrations add Initial
 ```
 
 
@@ -93,7 +98,7 @@ Now the build command executes correctly
 dotnet build  ./FoodOrdering
 
 # Still doesn't create migration files
-dotnet ef --project ./FoodOrdering migrations add InitialCreate
+dotnet ef --project ./FoodOrdering migrations add Initial
 ```
 
 Error message:
@@ -118,10 +123,12 @@ builder.Services.AddDbContext<DataContext>(options => options.UseSqlite("Data So
 Now running the command 
 
 ```shell
-dotnet ef --project ./FoodOrdering migrations add InitialCreate
+dotnet ef --project ./FoodOrdering migrations add Initial
 ```
 
 Should generate the files: 
-- `Migrations/20240601122655_initial.cs`
-- `Migrations/20240601122655_initial.Designer.cs`
+- `Migrations/<Timestamp>_Initial.cs`
+- `Migrations/<Timestamp>_Initial.Designer.cs`
 - `Migrations/DataContextModelSnapshot.cs`
+
+
