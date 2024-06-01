@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
 import {Observable, Subject} from "rxjs";
-import {FoodRequest, Order, OrderState} from "../model/data";
+import {FoodRequest, Order, OrderState} from "../../model/data";
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +25,7 @@ export class RealtimeClientService {
       this.pendingFoodUpdatedSubject.next(orders);
     });
   }
-  
+
   async orderFoodItem(foodId: number, table: number) {
     console.log("ordering");
     await this.hubConnection.invoke('OrderFoodItem', {
