@@ -18,3 +18,39 @@ UpgradeLog.htm
 AngularApp/ClientApp/.angular/cache/
 *-shm
 *-wal
+
+# Angular Client "FoodOrderingClient" ignored files
+
+# Compiled output
+FoodOrderingClient/dist
+FoodOrderingClient/tmp
+FoodOrderingClient/out-tsc
+FoodOrderingClient/bazel-out
+
+# Node
+FoodOrderingClient/node_modules
+FoodOrderingClient/npm-debug.log
+FoodOrderingClient/yarn-error.log
+
+# IDEs and editors
+FoodOrderingClient/.idea/
+FoodOrderingClient/.project
+FoodOrderingClient/.classpath
+FoodOrderingClient/.c9/
+*.launch
+FoodOrderingClient/.settings/
+*.sublime-workspace
+
+
+# Miscellaneous
+FoodOrderingClient/.angular/cache
+FoodOrderingClient/.sass-cache/
+FoodOrderingClient/connect.lock
+FoodOrderingClient/coverage
+FoodOrderingClient/libpeerconnection.log
+FoodOrderingClient/testem.log
+FoodOrderingClient/typings
+
+# System files
+.DS_Store
+Thumbs.db

@@ -155,3 +155,28 @@ dotnet watch run --project ./FoodOrdering
 You will see that the SQLite database is created by generating the file `mydatabase.sqlite`, this sqlite database can be queried and after running the app you can see that it has been populated with data. 
 
 - **Note that the app still doesn't have a front-end so the only way to see the data is by inspecting the sqlite database file `mydatabase.sqlite`**
+
+### Step 6: Set up Angular Client
+To do this step make sure that:
+
+1. You have `node` installed in your system.
+    1. You can verify this by running `node -v` which should return the version of node in your system.
+    1. This example was tested using version `v20.14.0`
+1. Verify `npm` is installed in your system.
+    1.  You can verify this by running `npm -v` which should return the version of node in your system.
+    1. This example was tested using version `v10.7.0`
+1. Make sure you have installed angular in your system
+    1.  You can verify this by running `ng --version` which should return the version of node in your system.
+    1. This can be installed by running: `npm install -g @angular/cli`
+    1. This example was tested using version `v18.0.2`
+
+To create the Angular Client execute the following command one level above the .NET project. (Don't worry its exactly where we have been working so far :D )
+```shell
+ng new FoodOrderingClient
+```
+This will pop up a couple of choices
+1. Share data with Google (I put No)
+1. ? Which stylesheet format would you like to use? CSS             [ https://developer.mozilla.org/docs/Web/CSS                     ]
+1. ? Do you want to enable Server-Side Rendering (SSR) and Static Site Generation (SSG/Prerendering)? Yes
+
+This should have created a directory"`FoodOrderingClient`" right next to the directory `FoodOrdering`
