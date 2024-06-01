@@ -4,7 +4,7 @@ In this example we are putting it all together following the example from [Lewis
 
 ## Local serve:
 ```shell
-dotnet watch run --project .\FoodOrdering\
+dotnet watch run --project ./FoodOrdering
 ```
 
 ## Steps
@@ -25,8 +25,8 @@ dotnet add ./FoodOrdering package Microsoft.EntityFrameworkCore.SQLite
 ### Step 3: Add models
 
 See the files:
-- `Model/FoodItem.cs`
-- `Model/Order.cs`
+- `FoodOrdering/Model/FoodItem.cs`
+- `FoodOrdering/Model/Order.cs`
 
 ### Step 4: Add context & Initial Migration file
 
@@ -63,20 +63,13 @@ dotnet build  ./FoodOrdering
 Returns the following error message
 
 ```
-C:\Users\bruno\Documents\Repo\demo-aspnet\FoodOrdering\Contexts\DataContext.cs(1,28): error CS0246: The type or namespace name 'DbContext' could not be found (are you missing a using directive or an assembly reference?) [C:\Users\bruno\Documents\Repo\demo-aspnet\FoodOrde
-ring\FoodOrdering.csproj]
-C:\Users\bruno\Documents\Repo\demo-aspnet\FoodOrdering\Contexts\DataContext.cs(3,24): error CS0246: The type or namespace name 'DbContextOptions<>' could not be found (are you missing a using directive or an assembly reference?) [C:\Users\bruno\Documents\Repo\demo-aspnet 
-\FoodOrdering\FoodOrdering.csproj]
-C:\Users\bruno\Documents\Repo\demo-aspnet\FoodOrdering\Contexts\DataContext.cs(7,12): error CS0246: The type or namespace name 'DbSet<>' could not be found (are you missing a using directive or an assembly reference?) [C:\Users\bruno\Documents\Repo\demo-aspnet\FoodOrderi 
-ng\FoodOrdering.csproj]
-C:\Users\bruno\Documents\Repo\demo-aspnet\FoodOrdering\Model\Order.cs(11,2): error CS0246: The type or namespace name 'JsonConverterAttribute' could not be found (are you missing a using directive or an assembly reference?) [C:\Users\bruno\Documents\Repo\demo-aspnet\Food 
-Ordering\FoodOrdering.csproj]
-C:\Users\bruno\Documents\Repo\demo-aspnet\FoodOrdering\Model\Order.cs(11,2): error CS0246: The type or namespace name 'JsonConverter' could not be found (are you missing a using directive or an assembly reference?) [C:\Users\bruno\Documents\Repo\demo-aspnet\FoodOrdering\ 
-FoodOrdering.csproj]
-C:\Users\bruno\Documents\Repo\demo-aspnet\FoodOrdering\Model\Order.cs(11,23): error CS0246: The type or namespace name 'JsonStringEnumConverter' could not be found (are you missing a using directive or an assembly reference?) [C:\Users\bruno\Documents\Repo\demo-aspnet\Fo 
-odOrdering\FoodOrdering.csproj]
-C:\Users\bruno\Documents\Repo\demo-aspnet\FoodOrdering\Contexts\DataContext.cs(8,12): error CS0246: The type or namespace name 'DbSet<>' could not be found (are you missing a using directive or an assembly reference?) [C:\Users\bruno\Documents\Repo\demo-aspnet\FoodOrderi 
-ng\FoodOrdering.csproj]
+<PathToDirectory>\demo-aspnet\FoodOrdering\Contexts\DataContext.cs(1,28): error CS0246: The type or namespace name 'DbContext' could not be found (are you missing a using directive or an assembly reference?) [<PathToDirectory>\demo-aspnet\FoodOrdering\FoodOrdering.csproj]
+<PathToDirectory>\demo-aspnet\FoodOrdering\Contexts\DataContext.cs(3,24): error CS0246: The type or namespace name 'DbContextOptions<>' could not be found (are you missing a using directive or an assembly reference?) [<PathToDirectory>\demo-aspnet\FoodOrdering\FoodOrdering.csproj]
+<PathToDirectory>\demo-aspnet\FoodOrdering\Contexts\DataContext.cs(7,12): error CS0246: The type or namespace name 'DbSet<>' could not be found (are you missing a using directive or an assembly reference?) [<PathToDirectory>\demo-aspnet\FoodOrdering\FoodOrdering.csproj]
+<PathToDirectory>\demo-aspnet\FoodOrdering\Model\Order.cs(11,2): error CS0246: The type or namespace name 'JsonConverterAttribute' could not be found (are you missing a using directive or an assembly reference?) [<PathToDirectory>\demo-aspnet\FoodOrdering\FoodOrdering.csproj]
+<PathToDirectory>\demo-aspnet\FoodOrdering\Model\Order.cs(11,2): error CS0246: The type or namespace name 'JsonConverter' could not be found (are you missing a using directive or an assembly reference?) [<PathToDirectory>\demo-aspnet\FoodOrdering\FoodOrdering.csproj]
+<PathToDirectory>\demo-aspnet\FoodOrdering\Model\Order.cs(11,23): error CS0246: The type or namespace name 'JsonStringEnumConverter' could not be found (are you missing a using directive or an assembly reference?) [<PathToDirectory>\demo-aspnet\FoodOrdering\FoodOrdering.csproj]
+<PathToDirectory>\demo-aspnet\FoodOrdering\Contexts\DataContext.cs(8,12): error CS0246: The type or namespace name 'DbSet<>' could not be found (are you missing a using directive or an assembly reference?) [<PathToDirectory>\demo-aspnet\FoodOrdering\FoodOrdering.csproj]
 ```
 
 The underlying issue is missing references in both files. To solve it it was necessary to add the following lines to the files `Contexts/DataContext.cs` & `Model/Order.cs`
@@ -127,9 +120,9 @@ dotnet ef --project ./FoodOrdering migrations add Initial
 ```
 
 Should generate the files: 
-- `Migrations/<Timestamp>_Initial.cs`
-- `Migrations/<Timestamp>_Initial.Designer.cs`
-- `Migrations/DataContextModelSnapshot.cs`
+- `FoodOrdering/Migrations/<Timestamp>_Initial.cs`
+- `FoodOrdering/Migrations/<Timestamp>_Initial.Designer.cs`
+- `FoodOrdering/Migrations/DataContextModelSnapshot.cs`
 
 
 ### Step 5: Add a seeding worker (populates the database)
@@ -180,3 +173,9 @@ This will pop up a couple of choices
 1. ? Do you want to enable Server-Side Rendering (SSR) and Static Site Generation (SSG/Prerendering)? Yes
 
 This should have created a directory"`FoodOrderingClient`" right next to the directory `FoodOrdering`
+
+### Step 7: Align our Angular Client with the server - Creation of Data Model
+> Because our project will need to receive food items that align with what we have on the server, we’ll first need to create our data model. 
+
+The data model is created in the file `FoodOrderingClient/model/data.ts`
+
