@@ -353,3 +353,67 @@ And in the browser calling the API using:
 - [http://localhost:5083/api/FoodItems/GetFoodItems](http://localhost:5083/api/FoodItems/GetFoodItems)
 - [http://localhost:5083/api/Kitchen/GetExistingOrders](http://localhost:5083/api/Kitchen/GetExistingOrders)
 
+
+### Step 14: Angular Frontend - Configure customer component & Connection to Backend SignalR Hub via Proxy
+
+> This step touches a lot of things so it will be broken down even further. In truth I am a bit low on energy at the time I "*finished*" with the front-end, so this step documentation is more like a reference to look where to look into the repositoryto replicate results. As a "*TODO*" a thorougher breakdown of the things put in place for this particular project should be described. 
+
+> The results achieved differ somewhat to the example from [Lewis Cianci](https://blog.logrocket.com/using-real-time-data-angular-signalr/#creating-server-side-app), this is because I faced some error messages regarding the refresh of the pages. An improvement note will be put in the end of this step for further information.
+
+#### Step 14.1: Set up proxy connection to SignalR Hub
+
+First create the file `FoodOrderingClient\proxy.conf.json` which containes the routing to the API and SignalR Hub mapping of the backend.
+
+
+Second link the proxy configuration of `FoodOrderingClient\proxy.conf.json` in the file `FoodOrderingClient\angular.json`  by adding the entry `"options": {"proxyConfig":proxy.conf.json"}`  into `projects.FoodOrderingClient.architect.serve.configurations`. If options already exist just add an entry to it with `"proxyConfig": "proxy.conf.json"`.
+
+```json
+{
+  "projects": {
+    //...,
+    "FoodOrderingClient": {
+      //...
+      "architect": {
+        //...,
+        "serve": {
+          "configurations": {
+            //...,
+            "options": {
+              "proxyConfig": "proxy.conf.json"
+            }
+            //...
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+
+#### Step 14.2: Re-distribute & re-wire directory layout
+
+- `src` - This folder contains all the files needed for our app
+  - `app`- This folder contains all the components (a component is a set of files made of an html template file, a css formatting file, a typescript file and a corresponding typescript spec file) and the configuration for the routing of the Client.
+    -`config` - This is close to our landing page.  
+    -`root` - This is close to our landing page.  
+
+To rewire the landing page make use of the files `./FoodOrderingClient/src/main.ts` and `./FoodOrderingClient/src/main.server.ts`
+  
+#### Step 14.3: Configure service realtime-client
+
+- `src` - This folder contains all the files needed for our app
+  - `services`- This folder contains all the services for our project (a service is a class and is defined by a typescript file and a corresponding typescript spec file)
+    -`realtime-client` - This folder contains the service for the real-time communication between our client and the SignalR of the backend. 
+
+#### Step 14.4: Configure customer and kitchen components
+To do this we need to add 2 components `kitchen` and `customer`.
+- `src` 
+  - `app`
+    -`customer` - This definesour customer page.  
+    -`kitchen` - This defines our kitchen page.  
+
+To route these new pages we need add them by modifying the file `./FoodOrderingClient/src/app/config/app.routes.ts`.
+
+#### Step 14.e: Improvement notes
+Basically trying to connect to the SignalR Hub from the realtime-service constructor makes (most times) the pages to not refresh and stale for more than 30s causing an error message in the front end, and an unreliable real-time connection with the backend. My patch-work solution to this was to add a button to connect/disconnect the client (front end) with the SignalR Hub from the backend. It does work and seems to be reliable, however a cleaner solution would be for the frontend to always be connected to the backend SignalR Hub, how to achieve that is not clear to me yet.  
