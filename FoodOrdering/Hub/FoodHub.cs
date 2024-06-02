@@ -1,16 +1,26 @@
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore; // Solves error CS1061: 'DbSet<Order>' does not contain a definition for 'Include'
+using Microsoft.Extensions.Logging; // Logging into console
+
+
+// using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 public class FoodHub : Hub<IFoodOrderClient>
 {
     private readonly DataContext _context;
+    private readonly ILogger _logger;
 
-    public FoodHub(DataContext context)
+    public FoodHub(DataContext context, ILogger<FoodHub> logger)
     {
         _context = context;
+        _logger = logger;
+        _logger.LogInformation("Initialized FoodHub (SignalRHub)");
     }
 
     public async Task OrderFoodItem(FoodRequest request)
     {
+        
+        _logger.LogInformation("Received OrderFoodItem with FoodRequest ");
         _context.Orders.Add(new Order()
         {
             FoodItemId = request.foodId,
@@ -37,6 +47,8 @@ public class FoodHub : Hub<IFoodOrderClient>
 
     public async Task EmitActiveOrders()
     {
+        
+        _logger.LogInformation("EmittingActiveOrders");
         var orders = _context.Orders.Include(x => x.FoodItem).Where(x => x.OrderState != OrderState.Completed).ToList();
 
         await Clients.All.PendingFoodUpdated(orders);
@@ -58,5 +70,6 @@ public class FoodHub : Hub<IFoodOrderClient>
 // These are the RPC calls on the client
 public interface IFoodOrderClient
 {
+    [AllowAnonymous]
     Task PendingFoodUpdated(List<Order> orders);
 }
